@@ -8,6 +8,12 @@ use Illuminate\Support\Str;
 
 class UrlController extends Controller
 {
+    public function index()
+    {
+        $urls = Url::latest()->get();
+
+        return response()->json($urls);
+    }
 
     public function store(Request $request)
     {
