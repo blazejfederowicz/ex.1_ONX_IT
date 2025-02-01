@@ -18,7 +18,7 @@
             <p class="block text-sm/6 font-medium text-gray-900">Short URL</p>
             <div class="mt-2">
               <div  class="block w-full rounded-md bg-gray-200 px-3 py-1.5  sm:text-sm/6" >
-                <a href="#" class=" underline underline-offset-2 text-blue-500">Here will be displayed your short url</a>
+                <a :href="data.shortened_url" rel="noopener noreferrer" target="_blank" class=" underline underline-offset-2 text-blue-500">{{ data.shortened_url }}</a>
               </div>
             </div>
           </div>
@@ -37,13 +37,14 @@ import axiosClient from '../axios';
 const data= ref({
     title:'',
     original_url:'',
-    shortener_url: null,
+    shortened_url: null,
 })
 
 const submit = () =>{
     axiosClient.post('/api/shorten-url', data.value)
     .then(response => {
-      console.log('Shortened URL:', response.data.shortened_url);
+        data.value.shortened_url = response.data.shortener_url
+      console.log('Shortened URL:', response.data.shortener_url);
     })
     .catch(error => {
       console.error('Error shortening the URL:', error);
